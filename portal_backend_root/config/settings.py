@@ -40,7 +40,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 CORS_ALLOW_ALL_ORIGINS: True
 CSRF_TRUSTED_ORIGINS = ['http://portal-test.home.loc']
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://localhost:3000'
 ]
 CORS_ALLOW_METHODS = [
     "DELETE",
