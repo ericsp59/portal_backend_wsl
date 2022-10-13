@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend_portal</title>
+</head>
+<body>
+
+<h3>Form2</h3>    
+<form action="{% url 'form_response' %}" method="POST">
+    {% csrf_token %} 
+    {{ order_form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
+<h3>form</h3>
+<form action="{% url 'form_response' %}" method="POST">
+    {% csrf_token %} 
+    <label for="name">Имя</label>
+    <input type="text", name="name">
+    <label for="phone">Телефон</label>
+    <input type="text", name="phone">
+    <button type="submit">Отправить</button>
+</form>
+
+<br>
+<br>
+<br>
+
+<h1>Orders</h1>
+{% if object_list %}
+    {% for obj in object_list %}
+    <p><b>ID: </b>{{ obj.id }}</p>
+    <p><b>DATE: </b>{{obj.order_dt}}</p>
+    <p><b>NAME: </b>{{obj.order_name}}</p>
+    <p><b>PHONE: </b>{{obj.order_phone}}</p>
+    <hr>
+    {% endfor %}
+
+{% else %}
+    <p>NO DATA</p>
+{% endif %}    
+</body>
+</html>
