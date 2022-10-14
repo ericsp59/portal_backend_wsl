@@ -61,7 +61,8 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
-    "Type"
+    "Type",
+    "Content-Disposition"
 ]
 
 
@@ -158,16 +159,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+print(BASE_DIR)
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'portal',
-        'USER': 'portal',
-        'PASSWORD': 'portal',
-        'HOST': '172.16.16.41',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR + '/db.sqlite3',
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'portal',
+    #     'USER': 'portal',
+    #     'PASSWORD': 'portal',
+    #     'HOST': '172.16.16.41',
+    #     'PORT': '',
+    # },
     'glpi': {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'glpi',  
@@ -175,10 +181,6 @@ DATABASES = {
         'PASSWORD': 'admin',  
         'HOST': '172.16.16.43',  
     }  
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
 }
 
 
