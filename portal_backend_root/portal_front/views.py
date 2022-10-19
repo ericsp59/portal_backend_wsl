@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import PortalFrontSettings, PortalGlpiSettings, PortalSemaphoreSettings
 from rest_framework.renderers import JSONRenderer
-from .dbconnection import getDevicesFromDb
+from .dbconnection import getDevicesFromDb, getNetDeviceInfoById, getPhoneInfoById, getComputerInfoById
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -17,13 +17,27 @@ from .models import Note
 
 # Create your views here.
 
+class PortalGetComputerInfoByIdFromDbApiView(APIView):
+    def get(self, request):
+        id = str(request.headers['ID'])
+        return Response({"get": "ok", "data": getComputerInfoById(id)})  
+
+class PortalGetPhoneInfoByIdFromDbApiView(APIView):
+    def get(self, request):
+        id = str(request.headers['ID'])
+        return Response({"get": "ok", "data": getPhoneInfoById(id)})    
+
+class PortalGetNetDevInfoByIdFromCbApiView(APIView):
+    def get(self, request):
+        id = str(request.headers['ID'])
+        return Response({"get": "ok", "data": getNetDeviceInfoById(id)})    
+
 
 class PortalGetDevicesFromDbApiView(APIView):
 
     def get(self, request):
         type = str(request.headers['Type'])
         return Response({"get": "ok", "data": getDevicesFromDb(type)})
-        # return self.getDevicesFromDb()
 
 
 def upload_func(name,file):
