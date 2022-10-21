@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import PortalFrontSettings, PortalGlpiSettings, PortalSemaphoreSettings
 from rest_framework.renderers import JSONRenderer
-from .dbconnection import getDevicesFromDb, getNetDeviceInfoById, getPhoneInfoById, getComputerInfoById
+from .dbconnection import getDevicesFromDb, getNetDeviceInfoById, getPhoneInfoById, getComputerInfoById, get_ip_addresses
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -16,6 +16,12 @@ from .models import Note
 
 
 # Create your views here.
+
+class PortalGetDeviceIpByIdFromDbApiView(APIView):
+    def get(self, request):
+        id = str(request.headers['ID'])
+        type = str(request.headers['Type'])
+        return Response({"get": "ok", "data": get_ip_addresses(type, id)}) 
 
 class PortalGetComputerInfoByIdFromDbApiView(APIView):
     def get(self, request):

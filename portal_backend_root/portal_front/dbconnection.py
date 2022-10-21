@@ -3,12 +3,29 @@ import time
 # from mysql.connector import connect, Error
 from django.db import connections, Error
 
-# mydb = connect(
-#   host="172.16.16.43",
-#   user="admin",
-#   password="admin",
-#   database="glpi"
-# )
+
+def get_ip_addresses(type, id):
+    print("#################", type, id)
+    select_ip_query = f'''
+    select glpi_ipaddresses.name
+    FROM glpi_ipaddresses
+    WHERE glpi_ipaddresses.mainitems_id = {id} and glpi_ipaddresses.mainitemtype="{type}"'''
+
+    try:           
+        with connections['glpi'].cursor() as cursor:
+            ip_list= []
+            cursor.execute(select_ip_query)
+            r = cursor.fetchall()
+            for ip in r:
+                if ip != ():
+                    ip_list.append(ip[0])
+                    print(ip[0])
+            return {'ip': filter_ip_4(ip_list)}
+            
+    except Error as e:
+        print(e)
+    
+
 
 def filter_ip_4(ip_arr):
     ipv4_list = []
@@ -29,8 +46,6 @@ def getComputerInfoById(id):
         glpi_computers
     where glpi_computers.id = {id}
     '''
-
-    select_ip_query = f'''select glpi_ipaddresses.name FROM glpi_ipaddresses WHERE glpi_ipaddresses.mainitems_id = {id} and glpi_ipaddresses.mainitemtype="Computer"'''
         
     try:           
         with connections['glpi'].cursor() as cursor:
@@ -45,14 +60,7 @@ def getComputerInfoById(id):
                     'serial':dev[2],
                     'contact':dev[3]
                 })
-
-            ip_list= []
-            cursor.execute(select_ip_query)
-            r = cursor.fetchall()
-            for ip in r:
-                if ip != ():
-                    ip_list.append(ip[0])
-            result.update({'ip': filter_ip_4(ip_list)})
+            result.update(get_ip_addresses('Computer', id))
             return result
             
     except Error as e:
@@ -69,8 +77,6 @@ def getPhoneInfoById(id):
         glpi_phones
     where glpi_phones.id = {id}
     '''
-
-    select_ip_query = f'''select glpi_ipaddresses.name FROM glpi_ipaddresses WHERE glpi_ipaddresses.mainitems_id = {id} and glpi_ipaddresses.mainitemtype="Phone"'''
         
     try:           
         with connections['glpi'].cursor() as cursor:
@@ -85,14 +91,7 @@ def getPhoneInfoById(id):
                     'serial':dev[2],
                     'contact_num':dev[3]
                 })
-
-            ip_list= []
-            cursor.execute(select_ip_query)
-            r = cursor.fetchall()
-            for ip in r:
-                if ip != ():
-                    ip_list.append(ip[0])
-            result.update({'ip': ip_list})
+            result.update(get_ip_addresses('Phone', id))
             return result
             
 
@@ -111,8 +110,6 @@ def getNetDeviceInfoById(id):
         glpi_networkequipments
     where glpi_networkequipments.id = {id}
     '''
-
-    select_ip_query = f'''select glpi_ipaddresses.name FROM glpi_ipaddresses WHERE glpi_ipaddresses.mainitems_id = {id} and glpi_ipaddresses.mainitemtype="NetworkEquipment"'''
         
     try:           
         with connections['glpi'].cursor() as cursor:
@@ -127,14 +124,7 @@ def getNetDeviceInfoById(id):
                     'serial':dev[2],
                     'uptime':dev[3]
                 })
-
-            ip_list= []
-            cursor.execute(select_ip_query)
-            r = cursor.fetchall()
-            for ip in r:
-                if ip != ():
-                    ip_list.append(ip[0])
-            result.update({'ip': ip_list})
+            result.update(get_ip_addresses('NetworkEquipment', id))
             return result
             
 
