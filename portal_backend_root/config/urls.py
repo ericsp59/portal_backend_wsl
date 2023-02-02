@@ -22,7 +22,7 @@ from django.conf import settings
 from portal_app.views import portal_app
 
 from portal_logs.views import PortalLogsApiView
-from portal_front.views import  PortalFrontApiView, PortalGlpiApiView, PortalSemaphoreApiView, PortalGetDevicesFromDbApiView, PortalGetNetDevInfoByIdFromCbApiView, PortalGetPhoneInfoByIdFromDbApiView, PortalGetComputerInfoByIdFromDbApiView, PortalGetDeviceIpByIdFromDbApiView
+from portal_front.views import  PortalFrontApiView, PortalGlpiApiView, PortalSemaphoreApiView, PortalGetDevicesFromDbApiView, PortalGetNetDevInfoByIdFromCbApiView, PortalGetPhoneInfoByIdFromDbApiView, PortalGetComputerInfoByIdFromDbApiView, PortalGetDeviceIpByIdFromDbApiView, PortalAddPlaybookFromExeApiView
 
 
 urlpatterns = [
@@ -30,6 +30,7 @@ urlpatterns = [
     path('', portal_app, name='portal_app'),
     path('api/v1/log_list/', PortalLogsApiView.as_view()),
     path('api/v1/add_playbook/', PortalFrontApiView.as_view()),
+    path('api/v1/add_playbook_from_exe/', PortalAddPlaybookFromExeApiView.as_view()),
     path('api/v1/get_glpi_settings/', PortalGlpiApiView.as_view()),
     path('api/v1/get_semaphore_settings/', PortalSemaphoreApiView.as_view()),
     path('api/v1/get_devices/', PortalGetDevicesFromDbApiView.as_view()),

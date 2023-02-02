@@ -55,7 +55,8 @@ CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
     "authorization",
-    "content-type",
+    # "content-type",
+    "Content-Type",
     "dnt",
     "origin",
     "user-agent",
@@ -63,7 +64,7 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
     "Type",
     "ID",
-    "Content-Disposition"
+    "Content-Disposition",
 ]
 
 

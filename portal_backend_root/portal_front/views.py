@@ -1,4 +1,5 @@
 import subprocess
+import filetype
 import time
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -78,6 +79,12 @@ class PortalSemaphoreApiView(APIView):
         }})
 
 
+class PortalAddPlaybookFromExeApiView(APIView):
+    def post(self, request):
+        print(request.FILES)
+        # print(file = request.FILES.get('file'))
+        # name = request.data['file'].name
+        return Response({"get": "ok", "data": 'data'})
 
 
 class PortalFrontApiView(APIView):
@@ -95,7 +102,7 @@ class PortalFrontApiView(APIView):
         # upload_func(f'/{settings.semaphore_srv_user}/{settings.semaphore_srv_operator_dir}/playbooks/{name}', file)
 
         # command = subprocess.run(["ssh", f'{settings.semaphore_srv_user}@localhost', f"cd /{settings.semaphore_srv_user}/{settings.semaphore_srv_operator_dir} && git add * && git commit -am '123' && git push"])
-        # ####
+        # #### 
 
         command = subprocess.run([f'scp', f'{name}', f'{settings.semaphore_srv_user}@{settings.semaphore_srv_address}:/{settings.semaphore_srv_user}/{settings.semaphore_srv_operator_dir}/playbooks'])
 
